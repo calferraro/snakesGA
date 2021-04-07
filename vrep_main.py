@@ -19,7 +19,7 @@ horizontal_joint_handles = []
 verticle_joint_handles = []
 h_starts = []
 v_starts = []
-error_code, snek_handle = vrep.simxGetObjectHandle(clientID,"snek",vrep.simx_opmode_oneshot_wait)
+error_code, snek_handle = vrep.simxGetObjectHandle(clientID,"snake",vrep.simx_opmode_oneshot_wait)
 error_code, start_pos = vrep.simxGetObjectPosition(clientID,snek_handle,-1, vrep.simx_opmode_streaming)
 for x in range(1,5):
     h_handle = "snake_joint_h{}".format(x)
