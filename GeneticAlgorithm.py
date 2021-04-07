@@ -55,7 +55,10 @@ class GeneticAlgorithm:
 
     def get_population():
         return population.copy()
-
+    
+    def get_best_individual():
+        return best_individual.copy()
+    
     def set_individual_fitness(index, fitness):
         population[index].set_fitness(fitness)
 
