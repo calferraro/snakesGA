@@ -4,11 +4,11 @@ class Individual:
     def __init__(self, chromosome_len):
         self.chromosome_len = chromosome_len
         self._chromosome = []
-        self._fitness = None
-        self.MIN_VAL = -100
-        self.MAX_VAL = 100
+        self._fitness = -999.01
+        self.MIN_VAL = [-180,0,0,0,0,0]
+        self.MAX_VAL = [180, 100, 100, 100, 100, 100]
         for i in range(chromosome_len):
-            rand_num = random.uniform(self.MIN_VAL, self.MAX_VAL)
+            rand_num = random.uniform(self.MIN_VAL[i], self.MAX_VAL[i])
             self._chromosome.append(rand_num)
 
     def get_fitness(self):
@@ -36,7 +36,8 @@ class Individual:
         the chance for a mutation in an offspring
         '''
         if(random.uniform(0,1) > mutation_rate):
-            self._chromosome[int(random.uniform(0,len(self._chromosome)))] = random.uniform(self.MAX_VAL, self.MIN_VAL)
+            randindex=int(random.uniform(0,len(self._chromosome)))
+            self._chromosome[randindex] = random.uniform(self.MAX_VAL[randindex], self.MIN_VAL[randindex])
 
 class GeneticAlgorithm:
     
@@ -100,7 +101,10 @@ class GeneticAlgorithm:
 
         # Take the top half of the population to form the new population
         # Note: this can be changed to something else if we think of a better way
-        self.fit_population = self.population[:self.population_size/2][:]
+        print('pop size',int(self.population_size/2 ))
+        print('pop size float ',self.population_size/2 )
+        self.fit_population = self.population[:int(self.population_size/2)][:]
+        
 
         # Randomly choose parents to crossover for a new generation
         population = []
@@ -120,5 +124,5 @@ class GeneticAlgorithm:
         '''
         for i in range(self.population_size-1):
             for j in range(self.population_size-i-1):
-                if(self.population[j].get_fitness() > self.population[j+1].get_fitness()):
+                if( self.population[j].get_fitness() > self.population[j+1].get_fitness()):
                     self.population[j], self.population[j+1] = self.population[j+1], self.population[j]
