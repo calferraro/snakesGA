@@ -12,7 +12,7 @@ genAlg = GeneticAlgorithm.GeneticAlgorithm(pop_size, mut_rate, num_params)
 
 
 vrep.simxFinish(-1) # just in case, close all opened connections
-clientID=vrep.simxStart('127.0.0.1',19999,True,True,5000,5) # Connect to V-REP 5 last param is 200 hz
+clientID=vrep.simxStart('127.0.0.1',19999,True,True,5000,2) # Connect to V-REP 5 last param is 200 hz
 
 if clientID != -1:
     print("Connected to remote API server")
@@ -41,18 +41,17 @@ for x in range(1,5):
 
 vrep.simxStopSimulation(clientID, vrep.simx_opmode_oneshot)
 time.sleep(1)
-num_gen = 5
+num_gen = 100
 
 for i in range(num_gen):
-    print("new generation " + i)
+    print("new generation " + str(i))
     pop = genAlg.get_population()
     for j in range(pop_size):
-        print("new individual")
+        print("individual" + str(j))
         vrep.simxStartSimulation(clientID, vrep.simx_opmode_oneshot)
         temp_individual = pop[j]
         temp_chroms = temp_individual.get_chromosome()
-        print("chroms:")
-        print(temp_chroms)
+        print("chroms:" + str(temp_chroms))
 
         time_step = 0
 
@@ -104,7 +103,23 @@ for i in range(num_gen):
                 print(error_code)
                 sys.exit()
     genAlg.new_generation()
+    if i == 1:
+        print("best indidual 1: ")
+        print(genAlg.get_best_individual().get_chromosome())
+        print("end")
+    if i == 10:
+        print("best indidual 10: ")
+        print(genAlg.get_best_individual().get_chromosome())
+        print("end")
+    if i == 20:
+        print("best indidual 20: ")
+        print(genAlg.get_best_individual().get_chromosome())
+        print("end")
+    if i == 50:
+        print("best indidual 50: ")
+        print(genAlg.get_best_individual().get_chromosome())
+        print("end")
 
-print("best indidual: ")
-print(genAlg.get_best_individual())
+print("best indidual 100: ")
+print(genAlg.get_best_individual().get_chromosome())
 print("end")
